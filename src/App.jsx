@@ -7,7 +7,7 @@ import { Gallery } from 'react-grid-gallery';
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-const BACKEND = 'http://localhost:8000/upload'
+const BACKEND = `${process.env.BACKEND}/upload`;
 
 function App() {
     const [galleryState, setGalleryState] = useState([])
