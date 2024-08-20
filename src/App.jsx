@@ -7,7 +7,7 @@ import { Gallery } from 'react-grid-gallery';
 import React from 'react';
 import Plot from 'react-plotly.js';
 
-const BACKEND = `${process.env.BACKEND}/upload`;
+const BACKEND = `https://touched-separately-goat.ngrok-free.app/upload`;
 
 function App() {
     const [galleryState, setGalleryState] = useState([])
