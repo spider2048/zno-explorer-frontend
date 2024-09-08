@@ -5,6 +5,7 @@ const BACKEND = `http://localhost:8000/upload`
 
 function ImageHandler(statsHandler, galleryHandler, viewHandler) {
     const [selectedFile, setSelectedFile] = useState(null);
+    const [tableData, setTableData] = useState(null)
     const [buttonState, setButtonState] = useState({
         text: "Submit",
         class: "primary"
@@ -59,7 +60,8 @@ function ImageHandler(statsHandler, galleryHandler, viewHandler) {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
+            
+            console.log(response)
 
             const data = response.data
             const images = data.predicted_images
@@ -84,11 +86,35 @@ function ImageHandler(statsHandler, galleryHandler, viewHandler) {
                 text: "Submit",
                 class: "primary"
             })
+            
+            setTableData(data.table)
         } catch (error) {
             console.error('Error uploading file', error);
             setAlertState(error.toString())
         }
     };
+
+    function downloadTable() {
+        function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+            document.body.removeChild(element);
+        }
+
+        if (!tableData) {
+            return <></>
+        }
+
+        return (
+            <Button className="btn btn-success w-100" onClick={() => download(selectedFile.name + ".csv", tableData)}>Download</Button>
+        )
+    }
 
     const render = () => {
         return (
@@ -115,7 +141,7 @@ function ImageHandler(statsHandler, galleryHandler, viewHandler) {
                                     <Form.Label className="text-muted">Pixel to unit conversion</Form.Label>
                                     <Form.Control type="text" id='conversion-scale' placeholder="Conversion Scale (2.13)" className="my-1 w-50 mx-1"></Form.Control>
                                     <select className="form-select my-1 w-50 mx-1" id="conversion-unit">
-                                    <option defaultValue={"nm"}>Nanometre (nm)</option>
+                                        <option defaultValue={"nm"}>Nanometre (nm)</option>
                                         <option value="um">Micrometre (um)</option>
                                         <option value="mm">Millimetre (mm)</option>
                                         <option value="cm">Centimetre (cm)</option>
@@ -124,8 +150,10 @@ function ImageHandler(statsHandler, galleryHandler, viewHandler) {
                                 <Button variant={buttonState.class} type={buttonState.class} className='m-2 mx-auto w-100'>
                                     {buttonState.text}
                                 </Button>
+
                             </Form.Group>
                         </Form>
+                        {downloadTable()}
                     </Col>
                 </Row>
             </Container>
