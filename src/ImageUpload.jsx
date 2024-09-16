@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Container, Row, Col, Card, Alert } from 'react-bootstrap';
 import axios from 'axios';
-const BACKEND = `http://localhost:8000/upload`
+const BACKEND = `https://touched-separately-goat.ngrok-free.app/upload`;
 
 function ImageHandler(statsHandler, galleryHandler, viewHandler) {
     const [selectedFile, setSelectedFile] = useState(null);
