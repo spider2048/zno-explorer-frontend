@@ -5,8 +5,8 @@ import ViewHandler from './3d';
 import ImageHandler from './ImageUpload';
 import { Container } from 'react-bootstrap';
 
-// const BACKEND = `https://touched-separately-goat.ngrok-free.app/upload`;
-const BACKEND = `http://localhost:8000/upload`
+const BACKEND = `https://touched-separately-goat.ngrok-free.app/upload`;
+// const BACKEND = `http://localhost:8000/upload`
 
 function App() {
     const galleryHandler = GalleryHandler();
